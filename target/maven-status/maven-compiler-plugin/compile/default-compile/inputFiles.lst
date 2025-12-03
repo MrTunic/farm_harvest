@@ -1,4 +1,12 @@
-/Users/omariona/farm_harvest/src/main/java/io/github/App.java
+/Users/omariona/farm_harvest/src/main/java/io/github/game/world/Player.java
+/Users/omariona/farm_harvest/src/main/java/io/github/game/world/Tile.java
+/Users/omariona/farm_harvest/src/main/java/io/github/game/world/TileType.java
+/Users/omariona/farm_harvest/src/main/java/io/github/game/interfaces/Interactable.java
+/Users/omariona/farm_harvest/src/main/java/io/github/game/interfaces/Growable.java
+/Users/omariona/farm_harvest/src/main/java/io/github/game/utils/ResourceManager.java
+/Users/omariona/farm_harvest/src/main/java/io/github/game/world/Crop.java
+/Users/omariona/farm_harvest/src/main/java/io/github/game/abstracts/AbstractCrop.java
+/Users/omariona/farm_harvest/src/main/java/io/github/game/controllers/GameController.java
 /Users/omariona/farm_harvest/src/main/java/module-info.java
-/Users/omariona/farm_harvest/src/main/java/io/github/SecondaryController.java
-/Users/omariona/farm_harvest/src/main/java/io/github/PrimaryController.java
+/Users/omariona/farm_harvest/src/main/java/io/github/game/controllers/MenuController.java
+/Users/omariona/farm_harvest/src/main/java/io/github/GameApp.java
