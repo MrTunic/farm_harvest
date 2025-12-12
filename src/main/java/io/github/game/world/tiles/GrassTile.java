@@ -7,7 +7,9 @@ import io.github.game.entities.Player;
 import io.github.game.world.World;
 
 public class GrassTile extends AbstractTile {
-    public GrassTile() { this.walkable = true; this.type = TileType.GRASS; }
+    public GrassTile() { 
+        this.walkable = true; 
+        this.type = TileType.GRASS; }
 
     @Override
     public void onInteract(Player player, World world, int x, int y) {

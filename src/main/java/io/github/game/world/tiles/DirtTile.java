@@ -3,22 +3,37 @@
 // ---------------------------
 package io.github.game.world.tiles;
 
-import io.github.game.entities.Player;
-import io.github.game.world.World;
 import io.github.game.crops.Crop;
 import io.github.game.crops.Wheat;
+import io.github.game.entities.Player;
+import io.github.game.world.World;
 
 public class DirtTile extends AbstractTile implements io.github.game.world.interact.Interactable {
     private Crop crop;
     private int tickCounter = 0;
     private final int ticksPerGrowth = 60;
 
-    public DirtTile() { this.walkable = true; this.type = TileType.DIRT; }
+    public DirtTile() { 
+        this.walkable = true; 
+        this.type = TileType.DIRT; 
+        this.crop = null;
+    }
 
-    public boolean hasCrop() { return crop != null; }
-    public Crop getCrop() { return crop; }
-    public void plant(Crop c) { this.crop = c; }
-    public void removeCrop() { this.crop = null; }
+    public boolean hasCrop() {
+        return crop != null;
+    }
+
+    public Crop getCrop() { 
+        return crop; 
+    }
+
+    public void plant(Crop c) { 
+        this.crop = c; 
+    }
+    
+    public void removeCrop() { 
+        this.crop = null;
+     }
 
     public void tick() {
         tickCounter = (tickCounter + 1) % ticksPerGrowth;
