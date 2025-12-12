@@ -1,0 +1,12 @@
+# Compiled classes
+out/
+*.class
+
+# macOS system files
+.DS_Store
+
+# IDE files (if you use IntelliJ, VSCode, etc.)
+.idea/
+*.iml
+.vscode/
+*.code-workspace
