@@ -1,6 +1,7 @@
 /Users/omariona/farm_harvest/src/main/java/io/github/game/util/ResourceManager.java
 /Users/omariona/farm_harvest/src/main/java/io/github/game/crops/Crop.java
 /Users/omariona/farm_harvest/src/main/java/io/github/game/world/tiles/DirtTile.java
+/Users/omariona/farm_harvest/src/main/java/io/github/game/entities/HoeTool.java
 /Users/omariona/farm_harvest/src/main/java/io/github/game/controllers/App.java
 /Users/omariona/farm_harvest/src/main/java/io/github/game/crops/Wheat.java
 /Users/omariona/farm_harvest/src/main/java/io/github/game/world/tiles/TileType.java
@@ -9,9 +10,13 @@
 /Users/omariona/farm_harvest/src/main/java/io/github/game/world/interact/Interactable.java
 /Users/omariona/farm_harvest/src/main/java/io/github/game/entities/Player.java
 /Users/omariona/farm_harvest/src/main/java/io/github/game/world/World.java
+/Users/omariona/farm_harvest/src/main/java/io/github/game/crops/Tomato.java
+/Users/omariona/farm_harvest/src/main/java/io/github/game/entities/Tool.java
 /Users/omariona/farm_harvest/src/main/java/io/github/game/util/Inventory.java
 /Users/omariona/farm_harvest/src/main/java/io/github/game/engine/Renderer.java
+/Users/omariona/farm_harvest/src/main/java/io/github/game/entities/SeedType.java
 /Users/omariona/farm_harvest/src/main/java/io/github/game/engine/GameLoop.java
+/Users/omariona/farm_harvest/src/main/java/io/github/game/entities/SeedTool.java
 /Users/omariona/farm_harvest/src/main/java/io/github/game/engine/InputHandler.java
 /Users/omariona/farm_harvest/src/main/java/io/github/game/world/tiles/WaterTile.java
 /Users/omariona/farm_harvest/src/main/java/io/github/game/world/tiles/AbstractTile.java

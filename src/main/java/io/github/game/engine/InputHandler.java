@@ -24,11 +24,18 @@ public class InputHandler {
             case LEFT, A -> p.move(-1, 0, world);
             case RIGHT, D -> p.move(1, 0, world);
             case E -> p.interact(world);
+
+            case DIGIT1 -> p.selectTool(-1); // hand
+            case DIGIT2 -> p.selectTool(0); // hoe
+            case DIGIT3 -> p.selectTool(1); // wheat
+            case DIGIT4 -> p.selectTool(2); // tomato
+
             default -> {
             }
         }
         renderer.requestRender();
     }
 
-    public void onKeyReleased(KeyCode code) { }
+    public void onKeyReleased(KeyCode code) {
+    }
 }

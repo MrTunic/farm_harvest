@@ -4,9 +4,13 @@ io/github/game/engine/GameLoop.class
 io/github/game/world/tiles/DirtTile.class
 io/github/game/world/World.class
 io/github/game/world/interact/Interactable.class
+io/github/game/crops/Tomato.class
 io/github/game/world/tiles/TileType.class
+io/github/game/entities/SeedType.class
 io/github/game/engine/Renderer.class
+io/github/game/entities/HoeTool.class
 io/github/game/crops/Wheat.class
+io/github/game/entities/Tool.class
 io/github/game/world/tiles/AbstractTile.class
 io/github/game/engine/Renderer$1.class
 io/github/game/engine/InputHandler.class
@@ -14,7 +18,9 @@ io/github/game/controllers/App.class
 io/github/game/entities/Player.class
 io/github/game/world/tiles/GrassTile.class
 io/github/game/crops/Crop.class
+io/github/game/entities/SeedTool$1.class
 io/github/game/util/ResourceManager.class
 io/github/game/engine/InputHandler$1.class
+io/github/game/entities/SeedTool.class
 io/github/game/world/tiles/WaterTile.class
 io/github/game/crops/CropStage.class
