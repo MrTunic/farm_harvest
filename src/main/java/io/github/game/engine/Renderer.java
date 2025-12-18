@@ -287,7 +287,7 @@ public final class Renderer {
         gc.setFill(Color.WHITE);
 
         gc.setFont(FONT_LARGE);
-        drawCenteredText("🌾 FARM HARVEST 🌾", height * 0.20 + titleFloat);
+        drawCenteredText("FARM HARVEST", height * 0.20 + titleFloat);
 
         // ---------- DESCRIPTION ----------
         gc.setFont(FONT_SMALL);
