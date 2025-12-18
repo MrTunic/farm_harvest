@@ -10,6 +10,7 @@ package io.github.game.controllers;
 import io.github.game.engine.GameLoop;
 import io.github.game.engine.InputHandler;
 import io.github.game.engine.Renderer;
+import io.github.game.engine.Renderer.AudioManager;
 import io.github.game.entities.HoeTool;
 import io.github.game.entities.Player;
 import io.github.game.entities.SeedTool;
@@ -51,8 +52,10 @@ public class App extends Application {
         Canvas canvas = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
         Renderer renderer = new Renderer(world, canvas, p);
         InputHandler input = new InputHandler(world, renderer);
+        AudioManager audioManager = renderer.new AudioManager();
 
-        loop = new GameLoop(world, renderer, 60);
+
+        loop = new GameLoop(world, renderer, 60, audioManager);
 
         BorderPane root = new BorderPane(canvas);
         Scene scene = new Scene(root);

@@ -1,5 +1,6 @@
 package io.github.game.engine;
 
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -17,7 +18,11 @@ import javafx.application.Platform;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 public final class Renderer {
 
@@ -43,6 +48,17 @@ public final class Renderer {
 
     // UI
     private final List<FlyingItem> flyingItems = new ArrayList<>();
+    private boolean showControlsOverlay = true;
+    private Runnable onOverlayToggled;
+    private double menuAnimTime = 0; // Menu animation
+
+    // Method from input handler when Q is pressed
+    public void toggleControlsOverlay() {
+        showControlsOverlay = !showControlsOverlay;
+        if (onOverlayToggled != null) {
+            onOverlayToggled.run(); // tells GameLoop to pause/unpause
+        }
+    }
 
     public Renderer(World world, Canvas canvas, Player player) {
         this.world = world;
@@ -88,6 +104,11 @@ public final class Renderer {
         drawToolBar(world.getPlayer());
         drawNightOverlay();
         drawDayCounter();
+        if (showControlsOverlay)
+            drawControlsOverlay();
+
+        menuAnimTime += 0.05;
+
     }
 
     // ---------------- WORLD ----------------
@@ -182,6 +203,8 @@ public final class Renderer {
 
         String[] crops = { "wheat", "tomato" };
 
+        gc.setFont(FONT_SMALL); // 🔹 smaller font just for counts
+
         for (int i = 0; i < crops.length; i++) {
             String crop = crops[i];
             int qty = p.getInventory().get(crop);
@@ -199,9 +222,10 @@ public final class Renderer {
             }
 
             gc.setFill(Color.WHITE);
-            gc.fillText(String.valueOf(qty),
-                    startX + slotSize / 2 - 4,
-                    y + slotSize + 12);
+            gc.fillText(
+                    "x" + qty,
+                    startX + 6,
+                    y + slotSize + 14);
         }
     }
 
@@ -235,11 +259,97 @@ public final class Renderer {
 
         String text = "Day " + dayCount + " - " + (int) percent + "%";
 
+        gc.setFont(FONT_SMALL);
         gc.setFill(Color.WHITE);
         gc.setStroke(Color.BLACK);
         gc.setLineWidth(1);
-        gc.strokeText(text, canvasWidth / 2.0 - 30, 20);
-        gc.fillText(text, canvasWidth / 2.0 - 30, 20);
+
+        // Slightly lower than before to avoid clipping
+        drawCenteredText(text, 26);
+    }
+
+    private void drawControlsOverlay() {
+        double width = canvas.getWidth();
+        double height = canvas.getHeight();
+
+        // Background
+        gc.setFill(Color.rgb(0, 0, 0, 0.88));
+        gc.fillRect(0, 0, width, height);
+
+        // Animation timers
+        double titleFloat = Math.sin(menuAnimTime) * 12;
+        double pulse = 0.6 + 0.4 * Math.sin(menuAnimTime * 2);
+
+        // ---------- TITLE ----------
+        gc.setFont(Font.font(pixelFont.getName()));
+        gc.setStroke(Color.BLACK);
+        gc.setLineWidth(3);
+        gc.setFill(Color.WHITE);
+
+        gc.setFont(FONT_LARGE);
+        drawCenteredText("🌾 FARM HARVEST 🌾", height * 0.20 + titleFloat);
+
+        // ---------- DESCRIPTION ----------
+        gc.setFont(FONT_SMALL);
+        gc.setFont(Font.font(pixelFont.getName()));
+        String[] desc = {
+                "A cozy farming experience.",
+                "Plant crops, harvest produce", 
+                "and watch your farm grow."
+        };
+
+        double descY = height * 0.30;
+        for (int i = 0; i < desc.length; i++) {
+            drawCenteredText(desc[i], descY + i * 24);
+        }
+
+        // ---------- CONTROLS ----------
+        // Controls Title
+        gc.setFont(Font.font(pixelFont.getName()));
+        gc.setStroke(Color.BLACK);
+        gc.setLineWidth(3);
+        gc.setFill(Color.WHITE);
+
+        gc.setFont(FONT_MEDIUM);
+        drawCenteredText("Controls:", height * 0.51);
+
+        // Controls List
+        gc.setFont(FONT_SMALL);
+        gc.setFont(Font.font(pixelFont.getName()));
+        String[] controls = {
+                "WASD / Arrow Keys — Move",
+                "E or SPACE — Use Tool / Harvest",
+                "1 – 4 — Select Tool or Crop",
+                "ENTER — Toggle Menu"
+        };
+
+        double controlsY = height * 0.58;
+        for (int i = 0; i < controls.length; i++) {
+            drawCenteredText(controls[i], controlsY + i * 32);
+        }
+
+        // ---------- START PROMPT ----------
+        gc.setGlobalAlpha(pulse);
+        gc.setFont(Font.font(pixelFont.getName(), 24));
+        drawCenteredText("Press ENTER to Start", height * 0.90);
+        gc.setGlobalAlpha(1.0);
+    }
+
+    public boolean isShowingOverlay() {
+        return showControlsOverlay;
+    }
+
+    public void setOverlayToggleCallback(Runnable callback) {
+        this.onOverlayToggled = callback;
+    }
+
+    private void drawCenteredText(String text, double y) {
+        Text temp = new Text(text);
+        temp.setFont(gc.getFont());
+        double textWidth = temp.getLayoutBounds().getWidth();
+
+        gc.strokeText(text, canvas.getWidth() / 2 - textWidth / 2, y);
+        gc.fillText(text, canvas.getWidth() / 2 - textWidth / 2, y);
     }
 
     // ---------------- PICKUP SPAWN ----------------
@@ -281,4 +391,47 @@ public final class Renderer {
             return progress >= 1;
         }
     }
+
+    // ---------------- MUSIC ----------------
+
+    public class AudioManager {
+        private MediaPlayer bgMusic;
+
+        public AudioManager() {
+            try {
+                String path = Paths.get("src/main/resources/audio/background.mp3").toUri().toString();
+                Media media = new Media(path);
+                bgMusic = new MediaPlayer(media);
+                bgMusic.setCycleCount(MediaPlayer.INDEFINITE); // loop
+                bgMusic.setVolume(0.3); // optional: adjust volume
+                bgMusic.play();
+            } catch (Exception e) {
+                System.err.println("Failed to load background music: " + e.getMessage());
+            }
+        }
+
+        public void stop() {
+            if (bgMusic != null)
+                bgMusic.stop();
+        }
+    }
+
+    // ---------------- FONT ----------------
+
+    Font pixelFont = Font.loadFont(
+            getClass().getResourceAsStream("/fonts/PressStart2P-Regular.ttf"),
+            20);
+
+    private final Font FONT_SMALL = Font.loadFont(
+            getClass().getResourceAsStream("/fonts/PressStart2P-Regular.ttf"),
+            12);
+
+    private final Font FONT_MEDIUM = Font.loadFont(
+            getClass().getResourceAsStream("/fonts/PressStart2P-Regular.ttf"),
+            18);
+
+    private final Font FONT_LARGE = Font.loadFont(
+            getClass().getResourceAsStream("/fonts/PressStart2P-Regular.ttf"),
+            32);
+
 }
