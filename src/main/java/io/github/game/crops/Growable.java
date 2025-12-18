@@ -3,4 +3,10 @@
 // ---------------------------
 package io.github.game.crops;
 
-public interface Growable { void grow(); boolean isFullyGrown(); }
+public interface Growable { 
+   
+    /** Called once per in-game day */
+    void onNewDay();
+
+    boolean isFullyGrown(); 
+}

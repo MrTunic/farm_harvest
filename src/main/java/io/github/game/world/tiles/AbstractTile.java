@@ -16,7 +16,13 @@ public abstract class AbstractTile {
 
     public void onStep(Player player, World world, int x, int y) { }
 
-    public abstract TileType getType();
+    public TileType getType() {
+        return type;
+    }
+
+    public void setType(TileType type) {
+    this.type = type;
+    }
 
     public TileType getTileTypeField() { return type; } // optional accessor
 }
