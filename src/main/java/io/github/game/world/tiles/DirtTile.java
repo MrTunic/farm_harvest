@@ -50,7 +50,7 @@ public class DirtTile extends AbstractTile implements io.github.game.world.inter
         }
 
         // Harvest
-        if (crop != null && crop.isFullyGrown() && tool == null) {
+        if (crop != null && crop.isFullyGrown()) {
             int yield = crop.getHarvestYield();
 
             String item = crop.getClass().getSimpleName().toLowerCase();

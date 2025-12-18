@@ -15,6 +15,7 @@ io/github/game/crops/CropStage.class
 io/github/game/util/Inventory.class
 io/github/game/crops/Growable.class
 io/github/game/engine/FlyingItem.class
+io/github/game/engine/Renderer$AudioManager.class
 io/github/game/crops/Tomato.class
 io/github/game/entities/Player$PickupRequest.class
 io/github/game/world/tiles/TileType.class

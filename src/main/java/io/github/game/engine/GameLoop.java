@@ -3,6 +3,7 @@
 // ---------------------------
 package io.github.game.engine;
 
+import io.github.game.engine.Renderer.AudioManager;
 import io.github.game.world.World;
 
 public class GameLoop {
@@ -10,12 +11,26 @@ public class GameLoop {
     private final Renderer renderer;
     private final int tps;
     private volatile boolean running = false;
+    private volatile boolean paused = true;
     private Thread thread;
+    private final AudioManager audioManager;
 
-    public GameLoop(World world, Renderer renderer, int ticksPerSecond) {
+    public GameLoop(World world, Renderer renderer, int ticksPerSecond, AudioManager audioManager) {
         this.world = world;
         this.renderer = renderer;
         this.tps = Math.max(1, ticksPerSecond);
+        this.audioManager = audioManager;
+
+        // Pause the game whenever the overlay is shown
+        this.renderer.setOverlayToggleCallback(() -> setPaused(renderer.isShowingOverlay()));
+    }
+
+    public void setPaused(boolean paused) {
+        this.paused = paused;
+    }
+
+    public boolean isPaused() {
+        return paused;
     }
 
     public void start() {
@@ -28,7 +43,9 @@ public class GameLoop {
             while (running) {
                 long now = System.nanoTime();
                 if (now - last >= nsPerTick) {
-                    world.update(); // crops etc.
+                    if (!paused) {
+                        world.update(); // crops etc only update when not paused.
+                    }
                     renderer.requestRender();
                     last += nsPerTick;
                 } else {

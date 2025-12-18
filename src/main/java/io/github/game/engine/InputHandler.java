@@ -23,15 +23,17 @@ public class InputHandler {
             case A, LEFT -> p.move(-1, 0, world, Direction.LEFT);
             case D, RIGHT -> p.move(1, 0, world, Direction.RIGHT);
             
-            case E -> {
+            case E, SPACE -> {
                 p.startInteractHold();
                 p.interact(world); // Starts the hoe animation
             }
 
-            case DIGIT1 -> p.selectTool(-1);
-            case DIGIT2 -> p.selectTool(0);
-            case DIGIT3 -> p.selectTool(1);
-            case DIGIT4 -> p.selectTool(2);
+            case ENTER -> renderer.toggleControlsOverlay();
+
+            case DIGIT1 -> p.selectTool(0);
+            case DIGIT2 -> p.selectTool(1);
+            case DIGIT3 -> p.selectTool(2);
+            case DIGIT4 -> p.selectTool(3);
             default -> {}
         }
 
