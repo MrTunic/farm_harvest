@@ -9,19 +9,18 @@
 Farm Harvest is a simple 2D tile-based farming game. Players can move around, till soil, plant crops, and harvest them. Crops grow over in-game days with a day/night cycle.
 
 ## Controls
-- Arrow keys or WASD = Move
-- E = Plant / Harvest
-- 1 - 4 = Select Tool
-  * 1: Harvest
-  * 2: Hoe Tool
-  * 3: Wheat Seeds
-  * 4: Tomato Seeds
+- WASD / Arrow Keys: Movement
+- E or SPACE: Use Tool / Harvest
+- 1 – 4: Select Tool or Crop
+- ENTER: Toggle Menu
 
 ## Features
 - Day/Night cycle with visual overlay
 - Growing crops (Wheat, Tomato)
 - Inventory display and toolbar
+- Main Menu / Pause Screen
 - Pickup animation when harvesting
+- Background Music
 
 - ## Tech Stack
 - Java 21
