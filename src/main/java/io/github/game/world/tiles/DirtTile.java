@@ -1,23 +1,26 @@
-// ---------------------------
-// File: src/main/java/io/github/game/world/tiles/DirtTile.java
-// ---------------------------
 package io.github.game.world.tiles;
 
 import io.github.game.crops.Crop;
 import io.github.game.entities.Player;
 import io.github.game.entities.SeedTool;
 import io.github.game.entities.Tool;
+import io.github.game.util.ResourceManager;
 import io.github.game.world.World;
+import javafx.scene.image.Image;
 
 public class DirtTile extends AbstractTile implements io.github.game.world.interact.Interactable {
     private Crop crop;
-    private int tickCounter = 0;
-    private final int ticksPerGrowth = 60;
 
     public DirtTile() {
         this.walkable = true;
         this.type = TileType.DIRT;
         this.crop = null;
+    }
+
+    public void onNewDay() {
+        if (crop != null) {
+            crop.onNewDay();
+        }
     }
 
     public boolean hasCrop() {
@@ -36,29 +39,32 @@ public class DirtTile extends AbstractTile implements io.github.game.world.inter
         this.crop = null;
     }
 
-    public void tick() {
-        tickCounter = (tickCounter + 1) % ticksPerGrowth;
-        if (tickCounter == 0 && crop != null)
-            crop.grow();
-    }
-
     @Override
     public void onInteract(Player player, World world, int x, int y) {
-
         Tool tool = player.getSelectedTool();
 
-        // Planting
+        // Plant
         if (crop == null && tool instanceof SeedTool seedTool) {
             crop = seedTool.createCrop();
             return;
         }
 
-        // Harvesting
+        // Harvest
         if (crop != null && crop.isFullyGrown() && tool == null) {
             int yield = crop.getHarvestYield();
 
             String item = crop.getClass().getSimpleName().toLowerCase();
             player.getInventory().add(item, yield);
+
+            // Trigger flying animation
+            Image img = switch (item) {
+                case "wheat" -> ResourceManager.loadImage("crops/wheat_stage_5.png");
+                case "tomato" -> ResourceManager.loadImage("crops/tomato_stage_5.png");
+                default -> null;
+            };
+
+            if (img != null)
+                player.requestPickupAnimation(x, y, item, img);
 
             crop = null;
         }

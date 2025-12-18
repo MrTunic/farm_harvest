@@ -19,7 +19,8 @@ public class GameLoop {
     }
 
     public void start() {
-        if (running) return;
+        if (running)
+            return;
         running = true;
         thread = new Thread(() -> {
             final long nsPerTick = 1_000_000_000L / tps;
@@ -27,11 +28,14 @@ public class GameLoop {
             while (running) {
                 long now = System.nanoTime();
                 if (now - last >= nsPerTick) {
-                    world.update();
+                    world.update(); // crops etc.
                     renderer.requestRender();
                     last += nsPerTick;
                 } else {
-                    try { Thread.sleep(1); } catch (InterruptedException ignored) {}
+                    try {
+                        Thread.sleep(1);
+                    } catch (InterruptedException ignored) {
+                    }
                 }
             }
         }, "GameLoop");
@@ -41,6 +45,10 @@ public class GameLoop {
 
     public void stop() {
         running = false;
-        try { if (thread != null) thread.join(50); } catch (InterruptedException ignored) {}
+        try {
+            if (thread != null)
+                thread.join(50);
+        } catch (InterruptedException ignored) {
+        }
     }
 }

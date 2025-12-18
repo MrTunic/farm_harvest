@@ -4,13 +4,19 @@
 package io.github.game.crops;
 
 public class Tomato extends Crop {
-    public Tomato() { 
-        this.growthStage = 0; 
-        this.maxStage = 5; 
+
+    public Tomato() {
+        this.maxStage = 5;
     }
 
-    @Override 
-    public int getHarvestYield() { 
-        return isFullyGrown() ? 3 : 1; 
+    /** Tomatoes take ~4 days */
+    @Override
+    protected double getDailyGrowth() {
+        return 1.25;
+    }
+
+    @Override
+    public int getHarvestYield() {
+        return isFullyGrown() ? 2 : 1;
     }
 }

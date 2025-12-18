@@ -32,7 +32,7 @@ public class App extends Application {
     public void start(Stage primaryStage) {
         
         // Create world (this also creates the Player)
-        World world = new World(16, 12);
+        World world = new World(16, 12, 800, 400);
 
         // Initialize player tools HERE
         Player p = world.getPlayer();
@@ -49,7 +49,7 @@ public class App extends Application {
                 ResourceManager.loadImage("crops/tomato_stage_0.png")));
 
         Canvas canvas = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
-        Renderer renderer = new Renderer(world, canvas);
+        Renderer renderer = new Renderer(world, canvas, p);
         InputHandler input = new InputHandler(world, renderer);
 
         loop = new GameLoop(world, renderer, 60);

@@ -10,7 +10,7 @@ public class SeedTool extends Tool {
     private final SeedType seedType;
 
     public SeedTool(SeedType seedType, Image sprite) {
-        super(seedType.name() + " Seeds", sprite);
+        super(seedType.name() + " Seeds", sprite, ToolType.SEED);
         this.seedType = seedType;
     }
 
