@@ -63,8 +63,7 @@ mvn clean javafx:run
 
 ```
 ```text
-farm_harvest/   
-├── .vscode/                    ← IDE settings (optional, not required to build)   
+farm_harvest/     
 ├── README.md                   ← Build & run instructions   
 ├── src/   
 │   └── main/   
