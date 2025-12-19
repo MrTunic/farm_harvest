@@ -1,12 +1,22 @@
-# Compiled classes
-out/
+# Maven
+target/
 *.class
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.iml
+*.code-workspace
+
+# Logs
+*.log
+
+# JavaFX cache / temp
+*.tmp
 
 # macOS system files
 .DS_Store
-
-# IDE files (if you use IntelliJ, VSCode, etc.)
-.idea/
-*.iml
-.vscode/
-*.code-workspace
