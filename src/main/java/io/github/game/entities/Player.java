@@ -1,3 +1,6 @@
+// ---------------------------
+// File: src/main/java/io/github/game/entities/Player.java
+// ---------------------------
 package io.github.game.entities;
 
 import java.util.ArrayList;
@@ -8,6 +11,7 @@ import io.github.game.util.Inventory;
 import io.github.game.world.World;
 import javafx.scene.image.Image;
 
+// Player class representing the player entity
 public class Player {
     private int x, y;
     private double renderX, renderY;
@@ -35,6 +39,7 @@ public class Player {
 
     private Consumer<PickupRequest> pickupCallback;
 
+    // Constructor
     public Player(int startX, int startY) {
         x = startX;
         y = startY;
@@ -45,6 +50,7 @@ public class Player {
         targetY = y;
     }
 
+    // Update player state
     public void update() {
         // Smooth movement
         renderX += (targetX - renderX) * MOVE_SPEED;
@@ -56,9 +62,8 @@ public class Player {
             renderX = targetX;
             renderY = targetY;
 
-            if (action == PlayerAction.WALKING) {
+            if (action == PlayerAction.WALKING && animFrame == 0) {
                 action = PlayerAction.IDLE;
-                animFrame = 0;
             }
         }
 
@@ -82,8 +87,9 @@ public class Player {
         }
     }
 
+    // Player movement
     public void move(int dx, int dy, World world, Direction dir) {
-        if (action == PlayerAction.HOEING)
+        if (action == PlayerAction.WALKING || action == PlayerAction.HOEING)
             return;
 
         int nx = x + dx;
@@ -112,6 +118,7 @@ public class Player {
         animFrame = 0;
     }
 
+    // Player interaction with the world
     public void interact(World world) {
 
         // Only play hoeing animation if holding a hoe
@@ -126,20 +133,23 @@ public class Player {
         world.getTile(x, y).onInteract(this, world, x, y);
     }
 
-    public void startInteractHold() {
+    // Interaction hold for tools like hoe
+    public void startHoeHold() {
         holdingInteract = true;
     }
 
-    public void stopInteractHold() {
+    public void stopHoeHold() {
         holdingInteract = false;
         interactHoldTicks = 0;
-        action = PlayerAction.IDLE;
+        if (action == PlayerAction.HOEING)
+            action = PlayerAction.IDLE;
     }
 
     public boolean isInteractReady() {
         return interactHoldTicks >= TILL_TIME_TICKS;
     }
 
+    // Getters and setters
     public int getX() {
         return x;
     }

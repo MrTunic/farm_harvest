@@ -1,7 +1,3 @@
-// Farming Game - JavaFX implementation skeleton (REVISED)
-// This revision applies the fixes you suggested: tiles expose TileType, Renderer crop-draw block completed,
-// drawImage helper present, World getters exposed, WaterTile included, resource manager fails loud.
-
 // ---------------------------
 // File: src/main/java/io/github/game/controllers/App.java
 // ---------------------------

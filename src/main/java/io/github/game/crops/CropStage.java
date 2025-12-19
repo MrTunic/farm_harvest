@@ -3,4 +3,11 @@
 // ---------------------------
 package io.github.game.crops;
 
-public enum CropStage { SEED, SPROUT, SMALL, MEDIUM, MATURE }
+// CropStage enum representing different growth stages of a crop
+public enum CropStage {
+    SEED,
+    SPROUT,
+    SMALL,
+    MEDIUM,
+    MATURE
+}

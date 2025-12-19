@@ -1,3 +1,6 @@
+// ---------------------------
+// File: src/main/java/io/github/game/engine/Renderer.java
+// ---------------------------
 package io.github.game.engine;
 
 import java.nio.file.Paths;
@@ -294,7 +297,7 @@ public final class Renderer {
         gc.setFont(Font.font(pixelFont.getName()));
         String[] desc = {
                 "A cozy farming experience.",
-                "Plant crops, harvest produce", 
+                "Plant crops, harvest produce",
                 "and watch your farm grow."
         };
 

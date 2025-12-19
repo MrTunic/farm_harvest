@@ -3,6 +3,7 @@
 // ---------------------------
 package io.github.game.crops;
 
+// Growable interface for crops that can grow over time
 public interface Growable { 
    
     /** Called once per in-game day */

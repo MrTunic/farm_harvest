@@ -3,6 +3,7 @@
 // ---------------------------
 package io.github.game.crops;
 
+// Crop abstract class representing a general crop in the game
 public abstract class Crop implements Growable {
 
     protected int growthStage = 0;
@@ -19,9 +20,10 @@ public abstract class Crop implements Growable {
             growthProgress -= 1.0;
         }
     }
+
     /** Daily growth rate based on days per stage */
-    protected abstract double getDailyGrowth();    
-    
+    protected abstract double getDailyGrowth();
+
     @Override
     public boolean isFullyGrown() {
         return growthStage >= maxStage;

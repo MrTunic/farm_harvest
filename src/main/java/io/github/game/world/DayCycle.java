@@ -1,5 +1,9 @@
+// ---------------------------
+// File: src/main/java/io/github/game/world/DayCycle.java
+// ---------------------------
 package io.github.game.world;
 
+// Manages the day and night cybe
 public class DayCycle {
     private final int dayLength, nightLength;
     private int tick = 0;
@@ -19,6 +23,7 @@ public class DayCycle {
         }
     }
 
+    // Getters
     public int getDayCount() {
         return dayCount;
     }
@@ -38,11 +43,13 @@ public class DayCycle {
     public double getNightAlpha() {
         if (tick < dayLength) {
             int fadeStart = dayLength - 50;
-            if (tick >= fadeStart) return (tick - fadeStart) / 50.0;
+            if (tick >= fadeStart)
+                return (tick - fadeStart) / 50.0;
             return 0;
         } else {
             int nightTick = tick - dayLength;
-            if (nightTick < nightLength) return 1 - nightTick / (double) nightLength;
+            if (nightTick < nightLength)
+                return 1 - nightTick / (double) nightLength;
             return 0;
         }
     }

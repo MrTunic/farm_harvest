@@ -59,6 +59,7 @@ This project was developed to demonstrate correct and relevant use of **object-o
 ```bash
 git clone https://github.com/MrTunic/farm_harvest.git
 cd farm_harvest
+mvn install
 mvn clean javafx:run 
 
 ```

@@ -3,4 +3,9 @@
 // ---------------------------
 package io.github.game.world.tiles;
 
-public enum TileType { GRASS, DIRT, WATER }
+// TileType enum representing different types of tiles in the game world
+public enum TileType {
+    GRASS,
+    DIRT,
+    WATER
+}

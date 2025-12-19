@@ -1,19 +1,26 @@
+// ---------------------------
+// File: src/main/java/io/github/game/engine/InputHandler.java
+// ---------------------------
 package io.github.game.engine;
 
 import io.github.game.entities.Direction;
+import io.github.game.entities.HoeTool;
 import io.github.game.entities.Player;
 import io.github.game.world.World;
 import javafx.scene.input.KeyCode;
 
+// InputHandler class to handle user input
 public class InputHandler {
     private final World world;
     private final Renderer renderer;
 
+    // Constructor
     public InputHandler(World world, Renderer renderer) {
         this.world = world;
         this.renderer = renderer;
     }
 
+    // Process key press events
     public void onKeyPressed(KeyCode code) {
         Player p = world.getPlayer();
 
@@ -22,10 +29,13 @@ public class InputHandler {
             case S, DOWN -> p.move(0, 1, world, Direction.DOWN);
             case A, LEFT -> p.move(-1, 0, world, Direction.LEFT);
             case D, RIGHT -> p.move(1, 0, world, Direction.RIGHT);
-            
+
             case E, SPACE -> {
-                p.startInteractHold();
-                p.interact(world); // Starts the hoe animation
+
+                if (p.getSelectedTool() instanceof HoeTool) {
+                    p.startHoeHold();
+                }
+                p.interact(world); // planting/harvesting works instantly
             }
 
             case ENTER -> renderer.toggleControlsOverlay();
@@ -34,17 +44,22 @@ public class InputHandler {
             case DIGIT2 -> p.selectTool(1);
             case DIGIT3 -> p.selectTool(2);
             case DIGIT4 -> p.selectTool(3);
-            default -> {}
+            default -> {
+            }
         }
 
         renderer.requestRender();
     }
 
+    // Process key release events
     public void onKeyReleased(KeyCode code) {
-        if (code == KeyCode.E) {
-        world.getPlayer().stopInteractHold();
-        }
-
-        world.getPlayer().stopMoving();
+        Player p = world.getPlayer();
+    if (code == KeyCode.SPACE && p.getSelectedTool() instanceof HoeTool) {
+        p.stopHoeHold();
     }
+    if (code == KeyCode.E) {
+        p.stopHoeHold();
+    }
+    p.stopMoving();
+}
 }

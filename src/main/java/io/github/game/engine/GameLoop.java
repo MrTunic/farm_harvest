@@ -6,6 +6,7 @@ package io.github.game.engine;
 import io.github.game.engine.Renderer.AudioManager;
 import io.github.game.world.World;
 
+// GameLoop class managing the main game loop
 public class GameLoop {
     private final World world;
     private final Renderer renderer;
@@ -15,6 +16,7 @@ public class GameLoop {
     private Thread thread;
     private final AudioManager audioManager;
 
+    // Constructor
     public GameLoop(World world, Renderer renderer, int ticksPerSecond, AudioManager audioManager) {
         this.world = world;
         this.renderer = renderer;
@@ -25,6 +27,7 @@ public class GameLoop {
         this.renderer.setOverlayToggleCallback(() -> setPaused(renderer.isShowingOverlay()));
     }
 
+    // Methods to control the game loop
     public void setPaused(boolean paused) {
         this.paused = paused;
     }

@@ -3,6 +3,7 @@
 // ---------------------------
 package io.github.game.crops;
 
+// Wheat class representing a wheat crop
 public class Wheat extends Crop {
     
     public Wheat() {
