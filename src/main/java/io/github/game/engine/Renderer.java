@@ -317,10 +317,10 @@ public final class Renderer {
         gc.setFont(FONT_SMALL);
         gc.setFont(Font.font(pixelFont.getName()));
         String[] controls = {
-                "WASD / Arrow Keys — Move",
-                "E or SPACE — Use Tool / Harvest",
-                "1 – 4 — Select Tool or Crop",
-                "ENTER — Toggle Menu"
+                "WASD / Arrow Keys — Move player",
+                "E or SPACE — Use tool / interact / harvest ",
+                "1 – 4 — Select tool or seed",
+                "ENTER — Toggle controls / pause menu"
         };
 
         double controlsY = height * 0.58;
