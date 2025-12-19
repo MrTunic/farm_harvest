@@ -2,7 +2,7 @@
 
 **Author:** Omarion Aubert  
 **Course:** IST JAV  
-**Project:** Game Project Submission  
+**Project:** Game Project  
 **Date:** December 18, 2025  
 
 GitHub Repository:  
@@ -62,6 +62,8 @@ cd farm_harvest
 mvn clean javafx:run 
 
 ```
+
+## 6. Project Structure
 ```text
 farm_harvest/     
 ├── README.md                   ← Build & run instructions   
@@ -121,7 +123,7 @@ farm_harvest/
 │           ├── tiles/            ← Tile sprites
 │           └── tools/            ← Tool sprites
 │
-├── target/                      ← Compiled build output (ignored)
+├── target/                      ← Compiled build output
 ├── .gitignore
 └── pom.xml                      ← Maven build configuration
 ```
@@ -174,7 +176,32 @@ Interfaces are used to define behavior contracts without enforcing implementatio
 
 ---
 
+### 7.4 Potential For Future Features
+
+Here are some ideas for features that could be added in future versions of Farm Harvest to enhance gameplay and depth:
+
+- NPCs and Animals
+  - Chickens, cows, and other farm animals
+  - Collectible items: eggs, milk, etc.
+- Save / Load System
+  - Ability to save your farm progress and load it later
+- Expanded Crop / Plant Logic
+  - More crops with unique growth patterns
+  - Trees, flowers, lily pads, and rocks
+- Additional Tools
+  - Axe for chopping trees
+  - Watering can to boost crop growth
+- Farm Infrastructure
+  - Bridges, paths, fences, doors, and other wooden structures
+  - Buildings such as houses, chicken coops, barns
+- Decorations
+  - Paintings, carpets, furniture, and other decorative objects
+- More Robust Game Mechanics
+  - Advanced growth cycles, crop interactions, and seasonal changes
+  - Events, quests, or goals to guide gameplay
+
+
 ## 8. Conclusion
 
-**Farm Harvest** fulfills all requirements of the Java mini-game project.  
+**Farm Harvest** fulfills all requirements of the Java project.  
 It demonstrates a clean object-oriented design, correct use of Java language features, and a complete, playable JavaFX game.
