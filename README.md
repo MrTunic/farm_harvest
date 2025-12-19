@@ -217,8 +217,21 @@ Here are some ideas for features that could be added in future versions of Farm 
   - Advanced growth cycles, crop interactions, and seasonal changes
   - Events, quests, or goals to guide gameplay
 
+## 8. Documentation
 
-## 8. Conclusion
+Detailed API documentation has been generated using **JavaDocs** and is available in the `docs/` folder of this repository.
+
+To view the documentation:
+
+1. Open the `docs/index.html` file in a web browser.
+2. Browse classes, methods, and fields along with their descriptions.
+
+This documentation provides additional insight into class responsibilities, public APIs, and method behavior.
+
+[![JavaDocs](https://img.shields.io/badge/JavaDocs-available-brightgreen)](docs/index.html)
+
+
+## 9. Conclusion
 
 **Farm Harvest** fulfills all requirements of the Java project.  
 It demonstrates a clean object-oriented design, correct use of Java language features, and a complete, playable JavaFX game.
