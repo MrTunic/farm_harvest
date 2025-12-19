@@ -228,7 +228,7 @@ To view the documentation:
 
 This documentation provides additional insight into class responsibilities, public APIs, and method behavior.
 
-[![JavaDocs](https://img.shields.io/badge/JavaDocs-available-brightgreen)](docs/index.html)
+[![JavaDocs](https://img.shields.io/badge/JavaDocs-available-brightgreen)](https://MrTunic.github.io/farm_harvest/)
 
 
 ## 9. Conclusion
