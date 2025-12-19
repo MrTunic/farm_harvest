@@ -3,22 +3,33 @@
 // ---------------------------
 package io.github.game.crops;
 
-// Wheat class representing a wheat crop
+/**
+ * Represents a wheat crop.
+ * Growth takes ~3 days.
+ */
 public class Wheat extends Crop {
-    
+
+    /** Constructor sets the maximum growth stage. */
     public Wheat() {
         this.maxStage = 5;
     }
 
-    /** 
-     * Wheat takes ~3 days to fully grow
-     * 5 stages / 3 days ≈ 1.67 stages per day
+    /**
+     * Defines daily growth for wheat.
+     * 5 stages / 3 days ≈ 1.7 stages per day.
+     *
+     * @return growth per day
      */
     @Override
     protected double getDailyGrowth() {
         return 1.7;
     }
 
+    /**
+     * Returns the harvest yield for wheat.
+     *
+     * @return 3 if fully grown, otherwise 1
+     */
     @Override
     public int getHarvestYield() {
         return isFullyGrown() ? 3 : 1;

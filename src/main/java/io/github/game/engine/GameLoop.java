@@ -6,36 +6,48 @@ package io.github.game.engine;
 import io.github.game.engine.Renderer.AudioManager;
 import io.github.game.world.World;
 
-// GameLoop class managing the main game loop
+/**
+ * Manages the main game loop, updating the world, rendering, and handling pause
+ * state.
+ */
 public class GameLoop {
     private final World world;
     private final Renderer renderer;
-    private final int tps;
+    private final int tps; // ticks per second
     private volatile boolean running = false;
     private volatile boolean paused = true;
     private Thread thread;
     private final AudioManager audioManager;
 
-    // Constructor
+    /**
+     * Constructor.
+     *
+     * @param world          the game world
+     * @param renderer       renderer for drawing the game
+     * @param ticksPerSecond update frequency
+     * @param audioManager   handles background music
+     */
     public GameLoop(World world, Renderer renderer, int ticksPerSecond, AudioManager audioManager) {
         this.world = world;
         this.renderer = renderer;
         this.tps = Math.max(1, ticksPerSecond);
         this.audioManager = audioManager;
 
-        // Pause the game whenever the overlay is shown
+        // Automatically pause when overlay is shown
         this.renderer.setOverlayToggleCallback(() -> setPaused(renderer.isShowingOverlay()));
     }
 
-    // Methods to control the game loop
+    /** Sets whether the game loop is paused. */
     public void setPaused(boolean paused) {
         this.paused = paused;
     }
 
+    /** Checks if the game loop is paused. */
     public boolean isPaused() {
         return paused;
     }
 
+    /** Starts the game loop on a separate daemon thread. */
     public void start() {
         if (running)
             return;
@@ -47,7 +59,7 @@ public class GameLoop {
                 long now = System.nanoTime();
                 if (now - last >= nsPerTick) {
                     if (!paused) {
-                        world.update(); // crops etc only update when not paused.
+                        world.update(); // only update when not paused
                     }
                     renderer.requestRender();
                     last += nsPerTick;
@@ -63,6 +75,7 @@ public class GameLoop {
         thread.start();
     }
 
+    /** Stops the game loop and waits for the thread to finish. */
     public void stop() {
         running = false;
         try {

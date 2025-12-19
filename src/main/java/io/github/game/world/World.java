@@ -9,27 +9,40 @@ import io.github.game.world.tiles.DirtTile;
 import io.github.game.world.tiles.GrassTile;
 import io.github.game.world.tiles.WaterTile;
 
-// Creates and manages the game world, including tiles and day/night cycle
+/**
+ * Represents the game world.
+ * Manages tiles, player state, and the day/night cycle.
+ */
 public class World {
+
     private final int width;
     private final int height;
     private final AbstractTile[][] tiles;
     private final Player player;
+    private final DayCycle dayCycle;
 
-    // Day/Night cycle
-    private final DayCycle dayCycle; // manages day/night timing
-
-    // World constructor
+    /**
+     * Constructs a new game world.
+     *
+     * @param width       world width in tiles
+     * @param height      world height in tiles
+     * @param dayLength   ticks per day
+     * @param nightLength ticks per night
+     */
     public World(int width, int height, int dayLength, int nightLength) {
         this.width = width;
         this.height = height;
         tiles = new AbstractTile[width][height];
+
         initTiles();
+
         player = new Player(1, 1);
         dayCycle = new DayCycle(dayLength, nightLength);
     }
 
-    // Tile initialization
+    /**
+     * Initializes world tiles.
+     */
     private void initTiles() {
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
@@ -42,7 +55,9 @@ public class World {
         }
     }
 
-    /** Update world logic: crops, tiles, etc. */
+    /**
+     * Updates world state each tick.
+     */
     public void update() {
         dayCycle.tick(); // advance the day/night cycle
 
@@ -51,6 +66,9 @@ public class World {
         }
     }
 
+    /**
+     * Triggers crop growth for a new day.
+     */
     private void onNewDay() {
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
@@ -61,21 +79,26 @@ public class World {
         }
     }
 
-    // Get tile at x,y
+    /**
+     * Returns the tile at the given world coordinates.
+     * Returns null if the coordinates are out of bounds.
+     */
     public AbstractTile getTile(int x, int y) {
         if (x < 0 || y < 0 || x >= width || y >= height)
             return null;
         return tiles[x][y];
     }
 
-    // Set tile at x,y
+    /**
+     * Replaces the tile at the given coordinates if they are in bounds.
+     */
     public void setTile(int x, int y, AbstractTile tile) {
         if (x < 0 || y < 0 || x >= width || y >= height)
             return;
         tiles[x][y] = tile;
     }
 
-    // World getters
+    // Getters
     public Player getPlayer() {
         return player;
     }
@@ -91,5 +114,4 @@ public class World {
     public DayCycle getDayCycle() {
         return dayCycle;
     }
-
 }

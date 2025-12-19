@@ -3,10 +3,20 @@
 // ---------------------------
 package io.github.game.entities;
 
-// Direction enum representing movement directions
+/**
+ * Represents the four cardinal movement directions for entities.
+ */
 public enum Direction {
+
+    /** Facing downward (south). */
     DOWN,
+
+    /** Facing left (west). */
     LEFT,
+
+    /** Facing right (east). */
     RIGHT,
+
+    /** Facing upward (north). */
     UP
 }

@@ -3,8 +3,14 @@
 // ---------------------------
 package io.github.game.entities;
 
-// SeedType enum representing different types of seeds
+/**
+ * Enumeration of all supported seed types.
+ */
 public enum SeedType {
+
+    /** Wheat crop seeds. */
     WHEAT,
+
+    /** Tomato crop seeds. */
     TOMATO
 }

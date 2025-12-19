@@ -27,8 +27,26 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
+/**
+ * Renderer is responsible for drawing the entire game state onto a JavaFX
+ * Canvas.
+ * <p>
+ * This includes:
+ * <ul>
+ * <li>The game world tiles (grass, dirt, water)</li>
+ * <li>Crops and their growth stages</li>
+ * <li>Player character animations (walking, hoeing)</li>
+ * <li>Flying item pickups from tiles to the inventory</li>
+ * <li>UI elements such as inventory, toolbar, day counter, and overlays</li>
+ * <li>Night/day visual effects</li>
+ * </ul>
+ * <p>
+ * The Renderer also handles animation updates and rendering requests via the
+ * JavaFX Platform thread.
+ */
 public final class Renderer {
 
+    // World and canvas
     private final World world;
     private final Canvas canvas;
     private final GraphicsContext gc;
@@ -55,14 +73,16 @@ public final class Renderer {
     private Runnable onOverlayToggled;
     private double menuAnimTime = 0; // Menu animation
 
-    // Method from input handler when Q is pressed
-    public void toggleControlsOverlay() {
-        showControlsOverlay = !showControlsOverlay;
-        if (onOverlayToggled != null) {
-            onOverlayToggled.run(); // tells GameLoop to pause/unpause
-        }
-    }
-
+    /**
+     * Constructs a Renderer for the given world and canvas.
+     * <p>
+     * Loads tile and crop images, player animations, and sets up the pickup
+     * callback.
+     *
+     * @param world  the game world to render
+     * @param canvas the JavaFX Canvas to draw on
+     * @param player the Player object, used for animations and pickup callbacks
+     */
     public Renderer(World world, Canvas canvas, Player player) {
         this.world = world;
         this.canvas = canvas;
@@ -93,10 +113,18 @@ public final class Renderer {
         requestRender();
     }
 
+    /**
+     * Requests a render on the JavaFX application thread.
+     * This ensures thread-safety for UI updates.
+     */
     public void requestRender() {
         Platform.runLater(this::render);
     }
 
+    /**
+     * Renders the entire game scene: world, player, items, UI, day/night overlay.
+     * Called internally via {@link #requestRender()}.
+     */
     private void render() {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
@@ -116,6 +144,11 @@ public final class Renderer {
 
     // ---------------- WORLD ----------------
 
+    /**
+     * Draws the entire world tiles and any crops present.
+     * Grass, dirt, and water tiles are drawn according to tile type.
+     * Crops are drawn on dirt tiles if present.
+     */
     private void drawWorld() {
         for (int x = 0; x < world.getWidth(); x++) {
             for (int y = 0; y < world.getHeight(); y++) {
@@ -141,6 +174,10 @@ public final class Renderer {
 
     // ---------------- PLAYER ----------------
 
+    /**
+     * Draws the player sprite on the canvas according to current position,
+     * direction, action (walking or hoeing), and animation frame.
+     */
     private void drawPlayer() {
         Player p = world.getPlayer();
         p.update(); // advance animation
@@ -165,6 +202,10 @@ public final class Renderer {
 
     // ---------------- PICKUPS ----------------
 
+    /**
+     * Draws all flying items currently animating toward the inventory.
+     * Updates their position and removes items whose animation is complete.
+     */
     private void drawFlyingItems() {
         Iterator<FlyingItem> it = flyingItems.iterator();
         while (it.hasNext()) {
@@ -179,6 +220,12 @@ public final class Renderer {
 
     // ---------------- UI ----------------
 
+    /**
+     * Draws the toolbar at the bottom of the screen showing all tools
+     * and highlights the currently selected tool.
+     *
+     * @param p the player whose tools are displayed
+     */
     private void drawToolBar(Player p) {
         int slotSize = 35;
         int spacing = 10;
@@ -198,6 +245,12 @@ public final class Renderer {
         }
     }
 
+    /**
+     * Draws the player's inventory with crops and their quantities.
+     * Semi-transparent images indicate zero quantity.
+     *
+     * @param p the player whose inventory is displayed
+     */
     private void drawInventory(Player p) {
         int slotSize = 35;
         int spacing = 20;
@@ -206,7 +259,7 @@ public final class Renderer {
 
         String[] crops = { "wheat", "tomato" };
 
-        gc.setFont(FONT_SMALL); // 🔹 smaller font just for counts
+        gc.setFont(FONT_SMALL); // smaller font just for counts
 
         for (int i = 0; i < crops.length; i++) {
             String crop = crops[i];
@@ -232,6 +285,10 @@ public final class Renderer {
         }
     }
 
+    /**
+     * Draws a night-time overlay to simulate darkness based on the
+     * world’s day/night cycle.
+     */
     private void drawNightOverlay() {
         double alpha = world.getDayCycle().getNightAlpha();
         if (alpha > 0) {
@@ -240,10 +297,21 @@ public final class Renderer {
         }
     }
 
+    /**
+     * Draws a single tile image at the specified tile coordinates.
+     *
+     * @param img the image to draw
+     * @param tx  x-coordinate in tiles
+     * @param ty  y-coordinate in tiles
+     */
     private void drawImage(Image img, int tx, int ty) {
         gc.drawImage(img, tx * tileSize, ty * tileSize, tileSize, tileSize);
     }
 
+    /**
+     * Draws the day counter at the top of the screen with the current day
+     * and percentage of the day that has passed.
+     */
     private void drawDayCounter() {
         int canvasWidth = (int) canvas.getWidth();
 
@@ -271,6 +339,22 @@ public final class Renderer {
         drawCenteredText(text, 26);
     }
 
+    /**
+     * Toggles the controls overlay (pause/menu) visibility.
+     * If an overlay toggle callback is set, it will be invoked (used to pause the
+     * game loop).
+     */
+    public void toggleControlsOverlay() {
+        showControlsOverlay = !showControlsOverlay;
+        if (onOverlayToggled != null) {
+            onOverlayToggled.run(); // tells GameLoop to pause/unpause
+        }
+    }
+
+    /**
+     * Draws the controls overlay (pause menu) showing title, description,
+     * controls list, and start prompt with animations.
+     */
     private void drawControlsOverlay() {
         double width = canvas.getWidth();
         double height = canvas.getHeight();
@@ -338,14 +422,31 @@ public final class Renderer {
         gc.setGlobalAlpha(1.0);
     }
 
+    /**
+     * Returns whether the controls overlay (pause menu) is currently shown.
+     *
+     * @return true if the overlay is visible, false otherwise
+     */
     public boolean isShowingOverlay() {
         return showControlsOverlay;
     }
 
+    /**
+     * Sets a callback to be executed whenever the overlay visibility changes.
+     * Typically used to pause or resume the game loop.
+     *
+     * @param callback a Runnable to execute on overlay toggle
+     */
     public void setOverlayToggleCallback(Runnable callback) {
         this.onOverlayToggled = callback;
     }
 
+    /**
+     * Draws a text string horizontally centered at the specified y-coordinate.
+     *
+     * @param text the text to draw
+     * @param y    the vertical position on the canvas
+     */
     private void drawCenteredText(String text, double y) {
         Text temp = new Text(text);
         temp.setFont(gc.getFont());
@@ -357,6 +458,14 @@ public final class Renderer {
 
     // ---------------- PICKUP SPAWN ----------------
 
+    /**
+     * Spawns a flying item animation from a tile to the player's inventory.
+     *
+     * @param cropType the type of crop ("wheat" or "tomato")
+     * @param tileX    the x-coordinate of the tile
+     * @param tileY    the y-coordinate of the tile
+     * @param img      the image of the item to animate
+     */
     public void spawnPickup(String cropType, int tileX, int tileY, Image img) {
         int startX = 3;
         int startY = 200;
@@ -373,12 +482,25 @@ public final class Renderer {
                 img));
     }
 
+    /**
+     * Inner class representing an item flying from a tile to the inventory.
+     * Used for pickup animations.
+     */
     private static class FlyingItem {
         double x, y;
         final double tx, ty;
         double progress = 0;
         final Image image;
 
+        /**
+         * Creates a FlyingItem instance.
+         *
+         * @param x   starting x-coordinate
+         * @param y   starting y-coordinate
+         * @param tx  target x-coordinate
+         * @param ty  target y-coordinate
+         * @param img image to render
+         */
         FlyingItem(double x, double y, double tx, double ty, Image img) {
             this.x = x;
             this.y = y;
@@ -387,6 +509,11 @@ public final class Renderer {
             this.image = img;
         }
 
+        /**
+         * Updates the item's position based on a linear interpolation.
+         *
+         * @return true if the animation has reached its target, false otherwise
+         */
         boolean update() {
             progress += 0.05;
             x += (tx - x) * 0.2;
@@ -397,9 +524,16 @@ public final class Renderer {
 
     // ---------------- MUSIC ----------------
 
+    /**
+     * AudioManager handles background music playback for the game.
+     * Plays a looping track and allows stopping the music.
+     */
     public class AudioManager {
         private MediaPlayer bgMusic;
 
+        /**
+         * Loads and starts playing the background music in a loop.
+         */
         public AudioManager() {
             try {
                 String path = Paths.get("src/main/resources/audio/background.mp3").toUri().toString();
@@ -413,6 +547,9 @@ public final class Renderer {
             }
         }
 
+        /**
+         * Stops the background music if currently playing.
+         */
         public void stop() {
             if (bgMusic != null)
                 bgMusic.stop();
@@ -421,6 +558,7 @@ public final class Renderer {
 
     // ---------------- FONT ----------------
 
+    /** Custom game font */
     Font pixelFont = Font.loadFont(
             getClass().getResourceAsStream("/fonts/PressStart2P-Regular.ttf"),
             20);

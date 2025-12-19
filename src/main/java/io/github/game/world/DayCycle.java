@@ -3,17 +3,28 @@
 // ---------------------------
 package io.github.game.world;
 
-// Manages the day and night cybe
+/**
+ * Manages the day/night cycle timing and transitions.
+ */
 public class DayCycle {
     private final int dayLength, nightLength;
     private int tick = 0;
     private int dayCount = 1;
 
+    /**
+     * Constructs a day/night cycle controller.
+     *
+     * @param dayLength   number of ticks in a day
+     * @param nightLength number of ticks in a night
+     */
     public DayCycle(int dayLength, int nightLength) {
         this.dayLength = dayLength;
         this.nightLength = nightLength;
     }
 
+    /**
+     * Advances the cycle by one tick.
+     */
     public void tick() {
         tick++;
         int total = dayLength + nightLength;
@@ -40,6 +51,11 @@ public class DayCycle {
         return nightLength;
     }
 
+    /**
+     * Computes night overlay opacity for rendering.
+     *
+     * @return alpha value between 0 and 1
+     */
     public double getNightAlpha() {
         if (tick < dayLength) {
             int fadeStart = dayLength - 50;

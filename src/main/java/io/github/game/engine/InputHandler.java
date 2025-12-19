@@ -9,18 +9,24 @@ import io.github.game.entities.Player;
 import io.github.game.world.World;
 import javafx.scene.input.KeyCode;
 
-// InputHandler class to handle user input
+/**
+ * Handles keyboard input and converts it into player actions or game commands.
+ */
 public class InputHandler {
     private final World world;
     private final Renderer renderer;
 
-    // Constructor
+    /** Constructor. */
     public InputHandler(World world, Renderer renderer) {
         this.world = world;
         this.renderer = renderer;
     }
 
-    // Process key press events
+    /**
+     * Handles key press events.
+     *
+     * @param code key code pressed
+     */
     public void onKeyPressed(KeyCode code) {
         Player p = world.getPlayer();
 
@@ -51,15 +57,19 @@ public class InputHandler {
         renderer.requestRender();
     }
 
-    // Process key release events
+    /**
+     * Handles key release events.
+     *
+     * @param code key code released
+     */
     public void onKeyReleased(KeyCode code) {
         Player p = world.getPlayer();
-    if (code == KeyCode.SPACE && p.getSelectedTool() instanceof HoeTool) {
-        p.stopHoeHold();
+        if (code == KeyCode.SPACE && p.getSelectedTool() instanceof HoeTool) {
+            p.stopHoeHold();
+        }
+        if (code == KeyCode.E) {
+            p.stopHoeHold();
+        }
+        p.stopMoving();
     }
-    if (code == KeyCode.E) {
-        p.stopHoeHold();
-    }
-    p.stopMoving();
-}
 }

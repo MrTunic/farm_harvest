@@ -3,7 +3,9 @@
 // ---------------------------
 package io.github.game.crops;
 
-// CropStage enum representing different growth stages of a crop
+/**
+ * Enum representing the different growth stages of a crop.
+ */
 public enum CropStage {
     SEED,
     SPROUT,

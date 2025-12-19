@@ -7,8 +7,18 @@ import java.io.InputStream;
 
 import javafx.scene.image.Image;
 
-// ResourceManager class for loading game resources
+/**
+ * Utility class responsible for loading external game resources.
+ * Currently supports image loading from the classpath.
+ */
 public class ResourceManager {
+
+    /**
+     * Loads an image resource from the classpath.
+     *
+     * @param relativePath path relative to the resources directory
+     * @return loaded Image, or null if loading fails
+     */
     public static Image loadImage(String relativePath) {
         InputStream is = ResourceManager.class.getClassLoader().getResourceAsStream(relativePath);
         if (is == null) {

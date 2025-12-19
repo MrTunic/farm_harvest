@@ -11,55 +11,79 @@ import io.github.game.util.ResourceManager;
 import io.github.game.world.World;
 import javafx.scene.image.Image;
 
-// Dirt tile that can hold crops and be interacted with. Represents farmable land.
+/**
+ * Represents a farmable dirt tile.
+ * Dirt tiles can hold crops and support planting and harvesting.
+ */
 public class DirtTile extends AbstractTile implements io.github.game.world.interact.Interactable {
     private Crop crop;
 
-    // Constructor
+    /**
+     * Constructs an empty dirt tile.
+     */
     public DirtTile() {
         this.walkable = true;
         this.type = TileType.DIRT;
         this.crop = null;
     }
 
+    /**
+     * Advances crop growth when a new in-game day begins.
+     */
     public void onNewDay() {
         if (crop != null) {
             crop.onNewDay();
         }
     }
 
-    // Check if this dirt tile has a crop planted
+    /**
+     * Checks whether a crop is planted on this tile.
+     *
+     * @return true if a crop exists
+     */
     public boolean hasCrop() {
         return crop != null;
     }
 
-    // Get the crop planted on this dirt tile
+    /**
+     * Returns the planted crop.
+     *
+     * @return crop or null
+     */
     public Crop getCrop() {
         return crop;
     }
 
-    // Plant a crop on this dirt tile
+    /**
+     * Plants a crop on this tile.
+     *
+     * @param c crop to plant
+     */
     public void plant(Crop c) {
         this.crop = c;
     }
 
-    // Remove the crop from this dirt tile
+    /**
+     * Removes the planted crop.
+     */
     public void removeCrop() {
         this.crop = null;
     }
 
-    // Interaction logic for planting and harvesting crops
+    /**
+     * Handles planting seeds or harvesting crops.
+     */
     @Override
     public void onInteract(Player player, World world, int x, int y) {
         Tool tool = player.getSelectedTool();
 
-        // Plant
+        // Plant seeds
         if (crop == null && tool instanceof SeedTool seedTool) {
             crop = seedTool.createCrop();
             return;
         }
 
-        // Harvest
+        // Harvest crop
         if (crop != null && crop.isFullyGrown()) {
             int yield = crop.getHarvestYield();
 
