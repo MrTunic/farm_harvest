@@ -49,20 +49,36 @@ This project was developed to demonstrate correct and relevant use of **object-o
 
 ---
 
-## 5. How to Build and Run (Command Line)
+## 5. How to Build and Run the Game (Command Line)
 
 ### Prerequisites
 - Java JDK 21 or newer
 - Maven installed and available in your PATH
+- JavaFX 21 or newer (only needed if running the JAR manually)
 
-### Build & Run
+### Build & Run from Source
+Clone the repository, install dependencies, and run the game using Maven:
+
 ```bash
 git clone https://github.com/MrTunic/farm_harvest.git
 cd farm_harvest
 mvn install
 mvn clean javafx:run 
-
 ```
+### Run Using the JAR
+java -jar target/farm_harvest-1.0-SNAPSHOT.jar
+
+### Build and Run the JAR Locally
+```bash
+mvn clean package
+
+java \
+--module-path /path/to/javafx/lib \
+--add-modules javafx.controls,javafx.fxml,javafx.media \
+-jar target/farm_harvest-1.0-SNAPSHOT.jar
+```
+
+
 
 ## 6. Project Structure
 ```text
