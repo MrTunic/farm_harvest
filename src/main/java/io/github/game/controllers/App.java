@@ -19,6 +19,8 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
+
+// App is the main entry point for the JavaFX application.
 public class App extends Application {
     private static final int CANVAS_WIDTH = 640;
     private static final int CANVAS_HEIGHT = 480;
