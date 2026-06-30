@@ -65,8 +65,6 @@ cd farm_harvest
 mvn install
 mvn clean javafx:run 
 ```
-### Run Using the JAR
-java -jar target/farm_harvest-1.0-SNAPSHOT.jar
 
 ### Build and Run the JAR Locally
 ```bash
